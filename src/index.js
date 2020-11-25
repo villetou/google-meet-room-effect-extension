@@ -20,40 +20,59 @@ async function createAudioChain(ctx) {
     const dry = ctx.createGain()
     dry.connect(ctx.destination)
 
-
     // Create parallel chain for distant chatter effect
     // Src -> Lowpass filter -> Reverb (Convolver) -> Output 
 
     const wetInput = ctx.createGain()
 
-    wetInput.gain.value = 1
+    wetInput.gain.value = 0.5
 
     const panRight = ctx.createStereoPanner()
     panRight.pan.value = 0.8
 
     const delayRight = ctx.createDelay()
-    delayRight.delayTime.value = 0.015
+    delayRight.delayTime.value = 0.02
 
     const panLeft = ctx.createStereoPanner()
     panLeft.pan.value = -0.8
 
-    const filter = ctx.createBiquadFilter()
-    filter.type = 'bandpass'
-    filter.frequency.value = 1400
-    filter.Q.value = 4
+    const preFilter = ctx.createBiquadFilter()
+    preFilter.type = 'bandpass'
+    preFilter.frequency.value = 1400
+    preFilter.Q.value = 4
+
+    const reverbPredelay = ctx.createDelay()
+    reverbPredelay.delayTime.value = 0.1
 
     const reverb = ctx.createConvolver()
     reverb.buffer = await loadImpulseBuffer(ctx)
 
     const wet = ctx.createGain()
+    const effectGain = ctx.createGain()
+    effectGain.gain.value = 0.04
+
+    // Create passthrough chain to pass a bit of dry sound through when out of focus
+    const dryPassthroughGain = ctx.createGain()
+    const dryPassthroughFilter = ctx.createBiquadFilter()
+
+    dryPassthroughGain.gain.value = 0.2
+    dryPassthroughFilter.type = 'lowpass'
+    dryPassthroughFilter.frequency.value = 1000
+    dryPassthroughFilter.Q.value = 0.7
 
     // -- Make connections --
-    // Split wet input to panning nodes, merge panned signals to filter
-    wetInput.connect(panRight).connect(delayRight).connect(filter)
-    wetInput.connect(panLeft).connect(filter)
+    // Split wet input to panning nodes, merge panned signals to preFilter
+    wetInput.connect(panRight).connect(delayRight).connect(preFilter)
+    wetInput.connect(panLeft).connect(preFilter)
 
     // Connect rest of the effect chain to output
-    filter.connect(reverb).connect(wet).connect(ctx.destination)
+    preFilter.connect(reverbPredelay).connect(reverb).connect(effectGain).connect(wet).connect(ctx.destination)
+
+    // Add chain for dry passthrough
+    panRight.connect(dryPassthroughGain)
+    panLeft.connect(dryPassthroughGain)
+
+    dryPassthroughGain.connect(dryPassthroughFilter).connect(wet)
 
     return {
         connect: (srcNode) => {
@@ -70,7 +89,7 @@ async function createAudioChain(ctx) {
             wet.gain.linearRampToValueAtTime(0.0, ctx.currentTime + time)
             dry.gain.linearRampToValueAtTime(1.0, ctx.currentTime + time)
         },
-        filter: filter
+        filter: preFilter
     }
 }
 
