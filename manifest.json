@@ -12,9 +12,17 @@
     "web_accessible_resources": ["impulses/*.wav"],
     "content_scripts": [
       {
-        "matches": ["*://meet.google.com/*"],
-        "js": ["src/index.js"]
+        "matches": ["https://meet.google.com/*"],
+        "js": ["src/content.js"]
       }
-    ]
-  
+    ],
+    "background": {
+      "scripts": ["src/background.js"]
+    },
+    "page_action": {
+      "show_matches": ["https://meet.google.com/*"],
+      "default_icon": {
+        "48": "icons/icon-48.png"
+      }
+    }
   }
