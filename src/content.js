@@ -26,13 +26,25 @@ async function createReverbAudioChain(ctx) {
     const wetInput = ctx.createGain()
     wetInput.gain.value = 0.5
 
-    const reverb = ctx.createConvolver()
-    reverb.buffer = await loadImpulseBuffer(ctx)
-
     const wet = ctx.createGain()
 
-    // Connect effect chain to output
-    wetInput.connect(reverb).connect(wet).connect(ctx.destination)
+    // TODO: Make this configurable from a settings popup
+    const useReverb = true
+
+    if (useReverb) {
+        const reverb = ctx.createConvolver()
+        reverb.buffer = await loadImpulseBuffer(ctx)
+
+        // Connect effect chain to output
+        wetInput.connect(reverb).connect(wet).connect(ctx.destination)
+    } else {
+        const filter = ctx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = 1400
+
+        // Connect effect chain to output
+        wetInput.connect(filter).connect(wet).connect(ctx.destination)
+    }
 
     return {
         ctx: ctx,
@@ -71,7 +83,7 @@ async function enableEffect(audioChain) {
 
     console.log('Enabling background chatter effect')
 
-    ctx.resume().then(function() { console.log('Effect chain\'s audio context resumed')})
+    ctx.resume().then(function () { console.log('Effect chain\'s audio context resumed') })
 
     audioChain.toFront(1.0)
     document.addEventListener('visibilitychange', handleVisibilityChange, false)
@@ -99,7 +111,7 @@ async function disableEffect(audioChain, sources) {
 
     const audioElements = document.getElementsByTagName('audio')
 
-    ctx.suspend().then(function() { console.log('Effect chain\'s audio context suspended')})
+    ctx.suspend().then(function () { console.log('Effect chain\'s audio context suspended') })
 
     Array.from(audioElements).forEach(audioElement => {
         audioElement.muted = false
@@ -117,7 +129,7 @@ async function runExtension() {
     ctx = new AudioContext()
     audioChain = await createReverbAudioChain(ctx)
 
-    ctx.suspend().then(function() { console.log('Effect chain\'s audio context suspended by default')})
+    ctx.suspend().then(function () { console.log('Effect chain\'s audio context suspended by default') })
 
     // App state
     let sources = []
