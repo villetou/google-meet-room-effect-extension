@@ -7,7 +7,6 @@ function sendMessageToCurrentTab(msg, callback) {
     })
 }
 
-// Saves options to chrome.storage
 function sendStateUpdate() {
     const state = {
         enabled: document.getElementById('enabled').checked,
@@ -19,31 +18,23 @@ function sendStateUpdate() {
             onTabStateUpdate(newState)
         }
     )
-
-    //   chrome.storage.local.set({ enabled }, function () {
-    //     console.log("saved state: ", enabled);
-    //   });
 }
 
 function onTabStateUpdate(state) {
     document.getElementById('enabled').checked = state.enabled
-    //   chrome.storage.local.get(["enabled"], function (items) {
-    //     document.getElementById("enabled").checked = items.enabled;
-    //   });
 }
 
 function enableUI() {
     document.getElementById('enabled').disabled = false
 }
 
+// Initial load -> fetch state, update and enable UI, add event listeners
 document.addEventListener('DOMContentLoaded', function () {
-    // Initial load -> fetch state, update and enable UI
     sendMessageToCurrentTab({ action: 'GET_TAB_STATE' }, function (state) {
         onTabStateUpdate(state)
         enableUI()
     })
 
-    // Add event listeners
     document
         .getElementById('enabled')
         .addEventListener('change', sendStateUpdate)

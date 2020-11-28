@@ -137,42 +137,45 @@ async function runExtension() {
     // Initialize global objects
     ctx = new AudioContext()
     audioChain = await createReverbAudioChain(ctx)
-
     ctx.suspend().then(function () {
         console.log("Effect chain's audio context suspended by default")
     })
 
     // App state
     let sources = []
-    let extensionEnabled = false
+    let extensionState = {
+        enabled: false
+    }
 
-    // TODO: Make async -> check docs how msg listening and sendResponse behaves when async...
+    // TODO: Make async? -> check docs how msg listening and sendResponse behaves when async
     function receiveNewState({ enabled }) {
         enabled ?
             enableEffect(audioChain).then(function (nodes) {
                 sources = nodes
                 if (nodes.length > 0) {
-                    extensionEnabled = true
+                    extensionState = {
+                        enabled: true
+                    }
                 }
             }) :
             disableEffect(audioChain, sources).then(function () {
                 sources = []
-                extensionEnabled = false
+                extensionState = {
+                    enabled: false
+                }
             })
     }
 
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-        console.log(msg, sender)
+        // console.log(msg, sender)
+
         if (sender.tab) return
 
         switch (msg.action) {
             default:
                 break
-            case 'TOGGLE_EXTENSION': {
-
-            }
             case 'GET_TAB_STATE': {
-                sendResponse({ enabled: extensionEnabled })
+                sendResponse({ ...extensionState })
             }
             case 'SET_TAB_STATE': {
                 receiveNewState(msg.state)
