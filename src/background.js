@@ -1,15 +1,15 @@
-
-function onMessage(msg, sender, sendResponse) {
-    console.log(sender)
-    console.log("received message!", msg)
-
-    if (msg.action === 'CONTENT_SCRIPT_LOADED') {
-        chrome.pageAction.show(sender.tab.id)
+function onMessage(msg, sender) {
+    switch (msg.action) {
+        default:
+            break
+        case 'CONTENT_SCRIPT_LOADED': {
+            chrome.pageAction.show(sender.tab.id)
+            chrome.pageAction.setPopup({
+                tabId: sender.tab.id,
+                popup: 'popup/settings.html',
+            })
+        }
     }
 }
 
-chrome.runtime.onMessage.addListener(onMessage);
-
-chrome.pageAction.onClicked.addListener(function(tab) {
-    chrome.tabs.sendMessage(tab.id, {action: 'TOGGLE_EXTENSION'});
-});
+chrome.runtime.onMessage.addListener(onMessage)

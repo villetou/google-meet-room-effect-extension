@@ -9,6 +9,9 @@
       "64": "icons/icon-64.png",
       "128": "icons/icon-128.png"
     },
+    "permissions": [
+      "storage"
+    ],
     "web_accessible_resources": ["impulses/*.wav"],
     "content_scripts": [
       {
@@ -23,6 +26,7 @@
       "show_matches": ["https://meet.google.com/*"],
       "default_icon": {
         "48": "icons/icon-48.png"
-      }
+      },
+      "default_popup": "popup/popup.html"
     }
   }

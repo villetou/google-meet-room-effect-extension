@@ -4,17 +4,33 @@
 <head>
     <meta charset="utf-8">
     <!-- <link rel="stylesheet" href="choose_beast.css" />-->
+
+    <style>
+        main {
+            background: #ffffe4
+        }
+        label {
+            display: inline-block;
+            white-space: nowrap;
+            min-width: 240px;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="popup-content">
-        <div class="button beast">Attenuate meeting when in background</div>
-    </div>
-    <div id="error-content" class="hidden">
-        <p>Can't beastify this web page.</p>
-        <p>Try a different page.</p>
-    </div>
-<!--<script src="choose_beast.js"></script>-->    
+    <main>
+        <label for="enabled">Attenuate meeting when in background</label>
+        <input disabled type="checkbox" name="enabled" id="enabled"></input>
+
+        <!-- Options:
+        <label for="useReverb">Simulate room</label>
+        <input type="checkbox" name="useReverb" id="useReverb"></input>
+        
+        <label for="useReverb">Muffle sound</label>
+        <input type="checkbox" name="useFilter" id="useFilter"></input> -->
+    </main>
+
+    <script src="./settings.js"></script>
 </body>
 
 </html>
