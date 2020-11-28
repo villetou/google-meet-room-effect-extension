@@ -1,32 +1,38 @@
 {
-
-    "manifest_version": 2,
-    "name": "Google Meet background chatter effect",
-    "version": "0.1",
-    "description": "When a Google Meet is tabbed out, make conversations sound more distant.",
-    "icons": {
-      "48": "icons/icon-48.png",
-      "64": "icons/icon-64.png",
-      "128": "icons/icon-128.png"
-    },
-    "permissions": [
-      "storage"
-    ],
-    "web_accessible_resources": ["impulses/*.wav"],
-    "content_scripts": [
-      {
-        "matches": ["https://meet.google.com/*"],
-        "js": ["src/content.js"]
-      }
-    ],
-    "background": {
-      "scripts": ["src/background.js"]
-    },
-    "page_action": {
-      "show_matches": ["https://meet.google.com/*"],
-      "default_icon": {
-        "48": "icons/icon-48.png"
-      },
-      "default_popup": "popup/popup.html"
+  "manifest_version": 2,
+  "name": "Google Meet background chatter effect",
+  "version": "0.0.5",
+  "description": "Make Google Meet sound distant when in the background.",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png"
+  },
+  "web_accessible_resources": [
+    "impulses/*.wav"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "src/content.js"
+      ]
     }
+  ],
+  "background": {
+    "scripts": [
+      "src/background.js"
+    ]
+  },
+  "page_action": {
+    "show_matches": [
+      "https://meet.google.com/*"
+    ],
+    "default_icon": {
+      "48": "icons/icon-48.png"
+    },
+    "default_popup": "popup/popup.html"
   }
+}
