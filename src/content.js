@@ -112,10 +112,12 @@ async function disableEffect(audioChain, sources) {
         false
     )
 
-    sources.map((audioElement) => {
-        audioChain.disconnect(audioElement)
-    })
-
+    if(sources && sources.length) {
+        sources && sources.map((audioElement) => {
+            audioChain.disconnect(audioElement)
+        })
+    }
+    
     const audioElements = document.getElementsByTagName('audio')
 
     ctx.suspend().then(function () {
@@ -150,9 +152,9 @@ async function runExtension() {
     // TODO: Make async? -> check docs how msg listening and sendResponse behaves when async
     function receiveNewState({ enabled }) {
         enabled
-            ? enableEffect(audioChain).then(function (nodes = []) {
+            ? enableEffect(audioChain).then(function (nodes) {
                   sources = nodes
-                  if (nodes.length > 0) {
+                  if (nodes && nodes.length > 0) {
                       extensionState = {
                           enabled: true,
                       }
@@ -172,13 +174,21 @@ async function runExtension() {
         switch (msg.action) {
             default:
                 break
-            case 'GET_TAB_STATE': {
-                sendResponse({ ...extensionState })
-            }
-            case 'SET_TAB_STATE': {
-                receiveNewState(msg.state)
-                sendResponse(msg.state)
-            }
+            case 'GET_TAB_STATE':
+                {
+                    sendResponse({ ...extensionState })
+                }
+                break
+            case 'SET_TAB_STATE':
+                {
+                    receiveNewState(msg.state)
+                    chrome.runtime.sendMessage({
+                        action: 'CONTENT_STATE_UPDATED',
+                        state: msg.state,
+                    })
+                    sendResponse(msg.state)
+                }
+                break
         }
     })
 

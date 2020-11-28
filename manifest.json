@@ -4,9 +4,11 @@
   "version": "0.0.5",
   "description": "Make Google Meet sound distant when in the background.",
   "icons": {
-    "48": "icons/icon-48.png",
-    "64": "icons/icon-64.png",
-    "128": "icons/icon-128.png"
+    "24": "icons/icon-off-24.png",
+    "48": "icons/icon-off-48.png",
+    "64": "icons/icon-off-64.png",
+    "128": "icons/icon-off-128.png",
+    "256": "icons/icon-off-256.png"
   },
   "web_accessible_resources": [
     "impulses/*.wav"
@@ -31,7 +33,11 @@
       "https://meet.google.com/*"
     ],
     "default_icon": {
-      "48": "icons/icon-48.png"
+      "24": "icons/icon-off-24.png",
+      "48": "icons/icon-off-48.png",
+      "64": "icons/icon-off-64.png",
+      "128": "icons/icon-off-128.png",
+      "256": "icons/icon-off-256.png"
     },
     "default_popup": "popup/popup.html"
   }
