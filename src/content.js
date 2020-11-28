@@ -167,8 +167,6 @@ async function runExtension() {
     }
 
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-        // console.log(msg, sender)
-
         if (sender.tab) return
 
         switch (msg.action) {
