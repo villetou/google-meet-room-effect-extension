@@ -144,26 +144,26 @@ async function runExtension() {
     // App state
     let sources = []
     let extensionState = {
-        enabled: false
+        enabled: false,
     }
 
     // TODO: Make async? -> check docs how msg listening and sendResponse behaves when async
     function receiveNewState({ enabled }) {
-        enabled ?
-            enableEffect(audioChain).then(function (nodes) {
-                sources = nodes
-                if (nodes.length > 0) {
-                    extensionState = {
-                        enabled: true
-                    }
-                }
-            }) :
-            disableEffect(audioChain, sources).then(function () {
-                sources = []
-                extensionState = {
-                    enabled: false
-                }
-            })
+        enabled
+            ? enableEffect(audioChain).then(function (nodes) {
+                  sources = nodes
+                  if (nodes.length > 0) {
+                      extensionState = {
+                          enabled: true,
+                      }
+                  }
+              })
+            : disableEffect(audioChain, sources).then(function () {
+                  sources = []
+                  extensionState = {
+                      enabled: false,
+                  }
+              })
     }
 
     chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
