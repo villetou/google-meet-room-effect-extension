@@ -6,30 +6,52 @@
     <!-- <link rel="stylesheet" href="choose_beast.css" />-->
 
     <style>
-        main {
-            background: #ffffe4
+        body {
+            font-size: 100%;
+            background: #ffffe4;
         }
+
         label {
             display: inline-block;
             white-space: nowrap;
-            min-width: 240px;
+            line-height: 2rem;
+        }
+
+        input[type="checkbox"] {
+            display: inline-block;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .status-text {
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .show-when-enabled,
+        .show-when-disabled {
+            display: none;
+        }
+
+        body.enabled .show-when-enabled {
+            display: block;
+        }
+
+        body.disabled .show-when-disabled {
+            display: block;
         }
     </style>
 </head>
 
-<body>
+<body class="enabled">
     <main>
-        <label for="enabled">Attenuate meeting when in background</label>
-        <input disabled type="checkbox" name="enabled" id="enabled"></input>
-
-        <!-- Options:
-        <label for="useReverb">Simulate room</label>
-        <input type="checkbox" name="useReverb" id="useReverb"></input>
-        
-        <label for="useReverb">Muffle sound</label>
-        <input type="checkbox" name="useFilter" id="useFilter"></input> -->
+        <span class="show-when-enabled"><span class="status-text">Extension on</span></span>
+        <span class="show-when-disabled"><span class="status-text">Extension off</span></span>
+        <label for="enabled">
+            Attenuate meeting audio when in background
+            <input disabled type="checkbox" name="enabled" id="enabled"></input>
+        </label>
     </main>
-
     <script src="./settings.js"></script>
 </body>
 

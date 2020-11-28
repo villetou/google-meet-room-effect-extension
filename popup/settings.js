@@ -22,6 +22,7 @@ function sendStateUpdate() {
 
 function onTabStateUpdate(state) {
     document.getElementById('enabled').checked = state.enabled
+    document.body.className = state.enabled ? 'enabled' : 'disabled'
 }
 
 function enableUI() {

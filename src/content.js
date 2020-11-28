@@ -150,7 +150,7 @@ async function runExtension() {
     // TODO: Make async? -> check docs how msg listening and sendResponse behaves when async
     function receiveNewState({ enabled }) {
         enabled
-            ? enableEffect(audioChain).then(function (nodes) {
+            ? enableEffect(audioChain).then(function (nodes = []) {
                   sources = nodes
                   if (nodes.length > 0) {
                       extensionState = {
