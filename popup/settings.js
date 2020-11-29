@@ -12,12 +12,12 @@ function sendStateUpdate() {
         enabled: document.getElementById('enabled').checked,
     }
 
-    sendMessageToCurrentTab(
-        { action: 'SET_TAB_STATE', state },
-        function (newState) {
-            onTabStateUpdate(newState)
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        const currTab = tabs[0]
+        if (currTab) {
+            chrome.runtime.sendMessage({ action: 'REQUEST_CONTENT_STATE_UPDATE', tabId: currTab.id, state })
         }
-    )
+    })
 }
 
 function onTabStateUpdate(state) {
@@ -29,6 +29,28 @@ function enableUI() {
     document.getElementById('enabled').disabled = false
 }
 
+function onMessage(msg, sender, sendResponse) {
+    switch (msg.action) {
+        default:
+            break
+        case 'CONTENT_STATE_UPDATED':
+            if (!msg.state || typeof msg.state.enabled === 'undefined') return
+
+            onTabStateUpdate(msg.state)
+
+            // msg.state.enabled
+            //     ? chrome.pageAction.setIcon({
+            //           tabId: sender.tab.id,
+            //           path: icons.enabled,
+            //       })
+            //     : chrome.pageAction.setIcon({
+            //           tabId: sender.tab.id,
+            //           path: icons.disabled,
+            //       })
+            break
+    }
+}
+
 // Initial load -> fetch state, update and enable UI, add event listeners
 document.addEventListener('DOMContentLoaded', function () {
     sendMessageToCurrentTab({ action: 'GET_TAB_STATE' }, function (state) {
@@ -36,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         enableUI()
     })
 
-    document
-        .getElementById('enabled')
-        .addEventListener('change', sendStateUpdate)
+    document.getElementById('enabled').addEventListener('change', sendStateUpdate)
+
+    chrome.runtime.onMessage.addListener(onMessage)
 })

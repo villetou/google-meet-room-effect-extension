@@ -11,7 +11,9 @@
     "256": "icons/icon-off-256.png"
   },
   "web_accessible_resources": [
-    "impulses/*.wav"
+    "impulses/*.wav",
+    "templates/button.html",
+    "icons/*.png"
   ],
   "content_scripts": [
     {

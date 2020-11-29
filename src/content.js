@@ -106,18 +106,15 @@ async function disableEffect(audioChain, sources) {
     console.log('Disabling background chatter effect')
 
     audioChain.toFront(1.0)
-    document.removeEventListener(
-        'visibilitychange',
-        handleVisibilityChange,
-        false
-    )
+    document.removeEventListener('visibilitychange', handleVisibilityChange, false)
 
-    if(sources && sources.length) {
-        sources && sources.map((audioElement) => {
-            audioChain.disconnect(audioElement)
-        })
+    if (sources && sources.length) {
+        sources &&
+            sources.map((audioElement) => {
+                audioChain.disconnect(audioElement)
+            })
     }
-    
+
     const audioElements = document.getElementsByTagName('audio')
 
     ctx.suspend().then(function () {
@@ -131,9 +128,94 @@ async function disableEffect(audioChain, sources) {
     })
 }
 
+async function injectButton() {
+    // Inject css
+    const injectStyle = document.createElement('style')
+    injectStyle.innerHTML = `
+        .bg-chatter-button-image-container {
+            overflow: show;
+            width:24px;height:24px;
+        }
+        .bg-chatter-button-image {
+            position: relative;
+            top: -5px;
+            left: -4px;
+            height: 32px;
+            width: 32px;
+        }
+        .bg-chatter-show-enabled,
+        .bg-chatter-show-disabled {
+            display: none;
+        }
+
+        .bg-chatter-enabled .bg-chatter-show-enabled,
+        .bg-chatter-disabled .bg-chatter-show-disabled
+        {
+            display: block;
+        }
+    `
+    document.head.append(injectStyle)
+
+    // Inject html
+    const url = chrome.runtime.getURL('templates/button.html')
+    const iconOffSrc = chrome.runtime.getURL('icons/icon-off-128.png')
+    const iconOnSrc = chrome.runtime.getURL('icons/icon-128.png')
+    const template = await fetch(url)
+    const inject = document.createElement('div')
+    let templateText = await template.text()
+
+    templateText = templateText.replace('${imgOffSrc}', iconOffSrc)
+    templateText = templateText.replace('${imgOnSrc}', iconOnSrc)
+
+    inject.innerHTML = templateText
+    const dividers = document.getElementsByClassName('qO3Z3c')
+    if (dividers[0]) {
+        dividers[0].parentElement.replaceChild(inject, dividers[0])
+    }
+
+    // Inject event listeners
+    const button = document.getElementById('bg-chatter-button')
+
+    button.addEventListener(
+        'click',
+        function () {
+            chrome.runtime.sendMessage({
+                action: 'REQUEST_CONTENT_STATE_UPDATE',
+                state: { enabled: !extensionState.enabled },
+            })
+        },
+        false
+    )
+
+    chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+        // Should listen to 'CONTENT_STATE_UPDATED' but it doesn't seem to come through to the tabs
+        if (msg.action === 'SET_TAB_STATE') {
+            const buttonCtrl = document.getElementById('bg-chatter-button-ctrl')
+
+            if (buttonCtrl && msg.state.enabled === true) {
+                buttonCtrl.className = 'bg-chatter-enabled'
+            } else if (buttonCtrl && msg.state.enabled === false) {
+                buttonCtrl.className = 'bg-chatter-disabled'
+            }
+        }
+    })
+}
+
+async function injectButtonLoop() {
+    // #lcsclient Seems to load after the buttons are rendered
+    if (document.getElementById('lcsclient')) {
+        injectButton()
+    } else {
+        setTimeout(injectButtonLoop, 1000)
+    }
+}
+
 // Global objects
 let ctx
 let audioChain
+let extensionState = {
+    enabled: false,
+}
 
 async function runExtension() {
     // Initialize global objects
@@ -145,12 +227,9 @@ async function runExtension() {
 
     // App state
     let sources = []
-    let extensionState = {
-        enabled: false,
-    }
 
     // TODO: Make async? -> check docs how msg listening and sendResponse behaves when async
-    function receiveNewState({ enabled }) {
+    function applyNewState({ enabled }) {
         enabled
             ? enableEffect(audioChain).then(function (nodes) {
                   sources = nodes
@@ -175,24 +254,20 @@ async function runExtension() {
             default:
                 break
             case 'GET_TAB_STATE':
-                {
-                    sendResponse({ ...extensionState })
-                }
+                sendResponse({ ...extensionState })
                 break
             case 'SET_TAB_STATE':
-                {
-                    receiveNewState(msg.state)
-                    chrome.runtime.sendMessage({
-                        action: 'CONTENT_STATE_UPDATED',
-                        state: msg.state,
-                    })
-                    sendResponse(msg.state)
-                }
+                applyNewState(msg.state)
+                chrome.runtime.sendMessage({
+                    action: 'CONTENT_STATE_UPDATED',
+                    state: msg.state,
+                })
                 break
         }
     })
 
     chrome.runtime.sendMessage({ action: 'CONTENT_SCRIPT_LOADED' })
+    injectButtonLoop()
 }
 
 runExtension()
