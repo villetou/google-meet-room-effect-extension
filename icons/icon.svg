@@ -13,7 +13,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
-   sodipodi:docname="icon.svg">
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/Users/villetou/own/browser-extensions/background-chatter-extension/icons/icon-off-16.png"
+   inkscape:export-xdpi="4.0640001"
+   inkscape:export-ydpi="4.0640001">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -24,10 +27,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.47745232"
-     inkscape:cx="180.68749"
+     inkscape:cx="142.98739"
      inkscape:cy="353.68036"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1031"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:snap-object-midpoints="true"
@@ -67,7 +70,7 @@
      inkscape:label="Enabled"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline"
+     style="display:none"
      sodipodi:insensitive="true">
     <circle
        style="fill:none;fill-rule:evenodd;stroke:#009c00;stroke-width:6;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -133,7 +136,7 @@
      inkscape:label="Disabled"
      inkscape:groupmode="layer"
      id="g1031"
-     style="display:none"
+     style="display:inline"
      sodipodi:insensitive="true">
     <circle
        style="fill:none;fill-rule:evenodd;stroke:#5f6367;stroke-width:6;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
