@@ -203,7 +203,7 @@ async function injectButton() {
 
 async function injectButtonLoop() {
     // #lcsclient Seems to load after the buttons are rendered
-    if (document.getElementById('lcsclient')) {
+    if (document.getElementsByClassName('NzPR9b').length > 0) {
         injectButton()
     } else {
         setTimeout(injectButtonLoop, 1000)
