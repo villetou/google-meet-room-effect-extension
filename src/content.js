@@ -137,11 +137,8 @@ async function injectButton() {
             width:24px;height:24px;
         }
         .bg-chatter-button-image {
-            position: relative;
-            top: -5px;
-            left: -4px;
-            height: 32px;
-            width: 32px;
+            height: 24px;
+            width: 24px;
         }
         .bg-chatter-show-enabled,
         .bg-chatter-show-disabled {
@@ -159,7 +156,7 @@ async function injectButton() {
     // Inject html
     const url = chrome.runtime.getURL('templates/button.html')
     const iconOffSrc = chrome.runtime.getURL('icons/icon-off-128.png')
-    const iconOnSrc = chrome.runtime.getURL('icons/icon-128.png')
+    const iconOnSrc = chrome.runtime.getURL('icons/alt-icon-128.png')
     const template = await fetch(url)
     const inject = document.createElement('div')
     let templateText = await template.text()
