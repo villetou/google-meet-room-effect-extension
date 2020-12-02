@@ -422,26 +422,36 @@
     <path
        style="display:inline;opacity:1;mix-blend-mode:normal;fill:none;stroke:#ffba00;stroke-width:11;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 71.899681,19.565366 101.90025,37.341651 71.899681,55.117936"
-       id="path1027" />
+       id="path1027"
+       inkscape:export-xdpi="152.78835"
+       inkscape:export-ydpi="152.78835" />
     <path
        style="display:inline;opacity:1;mix-blend-mode:normal;fill:none;stroke:#ea4335;stroke-width:11;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 71.899681,55.117936 41.899111,37.341651 71.899681,19.565366"
-       id="path1025" />
+       id="path1025"
+       inkscape:export-xdpi="152.78835"
+       inkscape:export-ydpi="152.78835" />
     <path
        style="display:inline;opacity:1;mix-blend-mode:normal;fill:none;stroke:#2684fc;stroke-width:11;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 41.899111,72.894217 V 37.341651 l 30.00057,17.776285 v 35.552565 z"
-       id="path1023" />
+       id="path1023"
+       inkscape:export-xdpi="152.78835"
+       inkscape:export-ydpi="152.78835" />
     <path
        style="display:inline;opacity:1;mix-blend-mode:overlay;fill:none;stroke:#00ac47;stroke-width:11;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 71.899681,90.670501 V 55.117936 L 101.90025,37.341651 v 35.552566 z"
-       id="path1021" />
+       id="path1021"
+       inkscape:export-xdpi="152.78835"
+       inkscape:export-ydpi="152.78835" />
     <rect
        style="opacity:1;fill:none;stroke:none;stroke-width:2.34851;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect939"
        width="85.11644"
        height="85.11644"
        x="29.341463"
-       y="12.559717" />
+       y="12.559717"
+       inkscape:export-xdpi="152.78835"
+       inkscape:export-ydpi="152.78835" />
   </g>
   <g
      inkscape:groupmode="layer"
