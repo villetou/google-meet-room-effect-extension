@@ -58,10 +58,10 @@ async function createReverbAudioChain(ctx) {
         },
         toBack: (time) => {
             wet.gain.linearRampToValueAtTime(1.0, ctx.currentTime + time)
-            dry.gain.linearRampToValueAtTime(0.0, ctx.currentTime + time)
+            dry.gain.linearRampToValueAtTime(0.05, ctx.currentTime + time)
         },
         toFront: (time) => {
-            wet.gain.linearRampToValueAtTime(0.0, ctx.currentTime + time)
+            wet.gain.linearRampToValueAtTime(0.18, ctx.currentTime + time)
             dry.gain.linearRampToValueAtTime(1.0, ctx.currentTime + time)
         },
     }
