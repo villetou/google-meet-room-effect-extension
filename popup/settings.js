@@ -37,16 +37,6 @@ function onMessage(msg, sender, sendResponse) {
             if (!msg.state || typeof msg.state.enabled === 'undefined') return
 
             onTabStateUpdate(msg.state)
-
-            // msg.state.enabled
-            //     ? chrome.pageAction.setIcon({
-            //           tabId: sender.tab.id,
-            //           path: icons.enabled,
-            //       })
-            //     : chrome.pageAction.setIcon({
-            //           tabId: sender.tab.id,
-            //           path: icons.disabled,
-            //       })
             break
     }
 }
