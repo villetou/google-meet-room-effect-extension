@@ -1,10 +1,10 @@
 const icons = {
     enabled: {
-        24: 'icons/alt-icon-24.png',
-        48: 'icons/alt-icon-48.png',
-        64: 'icons/alt-icon-64.png',
-        128: 'icons/alt-icon-128.png',
-        256: 'icons/alt-icon-256.png',
+        24: 'icons/icon-24.png',
+        48: 'icons/icon-48.png',
+        64: 'icons/icon-64.png',
+        128: 'icons/icon-128.png',
+        256: 'icons/icon-256.png',
     },
     disabled: {
         24: 'icons/icon-off-24.png',

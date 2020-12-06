@@ -1,0 +1,32 @@
+{
+  "name": "google-meet-room-effect-extension",
+  "version": "0.5.0",
+  "description": "A Chrome extension for Google Meet, which applies a room reverb sound effect to the audio when your meeting tab is in the background.",
+  "main": "index.js",
+  "scripts": {
+    "generate-icons": "node scripts/generate-png-icons.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/villetou/google-meet-room-effect-extension.git"
+  },
+  "keywords": [
+    "chrome",
+    "extension",
+    "google meet",
+    "web audio",
+    "audio",
+    "reverb",
+    "audio effect"
+  ],
+  "author": "Ville Touronen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/villetou/google-meet-room-effect-extension/issues"
+  },
+  "homepage": "https://github.com/villetou/google-meet-room-effect-extension#readme",
+  "devDependencies": {
+    "sharp": "^0.26.3"
+  }
+}
