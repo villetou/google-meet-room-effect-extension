@@ -15,7 +15,11 @@ function sendStateUpdate() {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const currTab = tabs[0]
         if (currTab) {
-            chrome.runtime.sendMessage({ action: 'REQUEST_CONTENT_STATE_UPDATE', tabId: currTab.id, state })
+            chrome.runtime.sendMessage({
+                action: 'REQUEST_CONTENT_STATE_UPDATE',
+                tabId: currTab.id,
+                state,
+            })
         }
     })
 }
