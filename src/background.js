@@ -1,3 +1,9 @@
+chrome.runtime.onInstalled.addListener(function (details) {
+    if (details.reason === 'install') {
+        chrome.tabs.create({ url: chrome.extension.getURL('instructions/instructions.html') })
+    }
+})
+
 const icons = {
     enabled: {
         16: 'icons/icon-16.png',

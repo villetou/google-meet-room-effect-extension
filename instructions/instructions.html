@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Meet Room Effect Extension added!</title>
+    <style>
+        @media screen and (max-width: 820px) {
+            .instructions {
+                zoom: 80%;
+            }
+        }
+
+        @media screen and (max-width: 620px) {
+            .instructions {
+                zoom: 60%;
+            }
+        }
+
+        body {
+            font-family: Futura, 'Century Gothic', AppleGothic, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 95vh;
+            background-color: #222;
+            color: #fff;
+        }
+        .instructions {
+            margin: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+        .instructions img {
+            margin: 16px;
+            display: block;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+        }
+        .step {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0.2;
+        }
+        .step + .step {
+            border-top: 1px dashed #444;
+        }
+        .text {
+            display: flex;
+            width: 320px;
+            font-size: 24px;
+        }
+        .number {
+            position: relative;
+            top: -7px;
+            font-size: 32px;
+            margin-right: 8px;
+            height: 100%;
+        }
+
+        @keyframes reveal {
+            0% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+        .step-1, .step-2, .step-3 {
+            animation: reveal 1s ease-out 1 0s forwards;
+        }
+        .step-1 { animation-delay: 2s; } .step-2 { animation-delay: 5s; } .step-3 { animation-delay: 8s; }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <div class="step step-1"><span class="text"><span class="number">1)</span>Open extensions menu</span><img src="instruction-1.png" alt="" /></div>
+        <div class="step step-2"><span class="text"><span class="number">2)</span>Pin the extension</span><img src="instruction-2.png" alt="" /></div>
+        <div class="step step-3"><span class="text"><span class="number">3)</span>In Google Meet enable the audio effect from the icon menu</span><img src="instruction-3.png" alt="" /></div>
+    </div>
+</body>
+</html>
