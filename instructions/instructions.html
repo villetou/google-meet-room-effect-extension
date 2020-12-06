@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,19 +28,48 @@
             background-color: #222;
             color: #fff;
         }
+
+        h1 {
+            font-weight: normal;
+        }
+
+        @keyframes glow {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .top-right-glow-box {
+            animation: glow 3s ease-in-out 0s infinite alternate;
+            position: fixed;
+            top: -6px;
+            right: 35px;
+            width: 100px;
+            height: 3px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0px 0px 35px 25px #fff;
+            opacity: 0.5;
+        }
+
         .instructions {
             margin: 2rem;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
             justify-content: space-between;
         }
-        .instructions img {
-            margin: 16px;
+
+        .image-container {
             display: block;
+            margin: 16px;
             border-radius: 12px;
-            border: 1px solid #ccc;
+            overflow: hidden;
         }
+
         .step {
             width: 100%;
             display: flex;
@@ -48,14 +78,13 @@
             justify-content: space-between;
             opacity: 0.2;
         }
-        .step + .step {
-            border-top: 1px dashed #444;
-        }
+
         .text {
             display: flex;
             width: 320px;
             font-size: 24px;
         }
+
         .number {
             position: relative;
             top: -7px;
@@ -65,20 +94,104 @@
         }
 
         @keyframes reveal {
-            0% { opacity: 0.2; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 0.2;
+                r: 400;
+            }
+
+            100% {
+                opacity: 1;
+                r: 20;
+            }
         }
-        .step-1, .step-2, .step-3 {
-            animation: reveal 1s ease-out 1 0s forwards;
+
+        .svg-mask {
+            opacity: 0.2;
         }
-        .step-1 { animation-delay: 2s; } .step-2 { animation-delay: 5s; } .step-3 { animation-delay: 8s; }
+        
+        .step-1,
+        .step-2,
+        .step-3 {
+            animation: reveal 1s ease-in-out 1 0s forwards;
+        }
+
+        .mask-circle-1, .mask-circle-2, .mask-circle-3 {
+            animation: reveal 2s ease-in-out 1 1s forwards;
+            r: 400;
+        }
+
+        .step-1, .mask-circle-1 {
+            animation-delay: 2s;
+        }
+
+        .step-2, .mask-circle-2 {
+            animation-delay: 5s;
+        }
+
+        .step-3, .mask-circle-3 {
+            animation-delay: 8s;
+        }
     </style>
 </head>
+
 <body>
+    <div class="top-right-glow-box"></div>
     <div class="instructions">
-        <div class="step step-1"><span class="text"><span class="number">1)</span>Open extensions menu</span><img src="instruction-1.png" alt="" /></div>
-        <div class="step step-2"><span class="text"><span class="number">2)</span>Pin the extension</span><img src="instruction-2.png" alt="" /></div>
-        <div class="step step-3"><span class="text"><span class="number">3)</span>In Google Meet enable the audio effect from the icon menu</span><img src="instruction-3.png" alt="" /></div>
+        <h1>Google Meet Room Audio Extension</h1>
+        <div class="step step-1">
+            <span class="text">
+                <span class="number">1)</span>
+                Open extensions menu
+            </span>
+            <div class="image-container" style="width:198px;height:112px;background-image:url(instruction-1.png);">
+                <svg class="svg-mask" width="202" height="115">
+                    <defs>
+                    <mask id="hole">
+                        <rect width="202px" height="115px" fill="white"/>
+                        <circle class="mask-circle-1" r="20" cx="112" cy="61" fill="black"/>
+                    </mask>
+                    </defs>
+                    <rect width="202px" height="115px" fill="black" mask="url(#hole)" />
+                </svg>
+            </div>
+        </div>
+        <div class="step step-2">
+            <span class="text">
+                <span class="number">2)</span>
+                Pin the extension
+            </span>
+            <div class="image-container" style="width:322px;height:353px;background-image:url(instruction-2.png);">
+                <svg class="svg-mask" width="322" height="353">
+                    <defs>
+                    <mask id="hole2">
+                        <rect width="322px" height="353px" fill="white"/>
+                        <circle class="mask-circle-2" r="20" cx="261" cy="171" fill="black"/>
+                    </mask>
+                    </defs>
+                    <rect width="322px" height="353px" fill="black" mask="url(#hole2)" />
+                </svg>
+            </div>
+        </div>
+        <div class="step step-3">
+            <span class="text">
+                <span class="number">3)</span>
+                <span>
+                    In <u>Google Meet</u> enable the audio effect from the icon menu
+                </span>
+            </span>
+            <div class="image-container" style="width:198px;height:112px;background-image:url(instruction-3.png);">
+                <svg class="svg-mask" width="202" height="115">
+                    <defs>
+                    <mask id="hole3">
+                        <rect width="202px" height="115px" fill="white"/>
+                        <circle class="mask-circle-3" r="20" cx="96" cy="61" fill="black"/>
+                    </mask>
+                    </defs>
+                    <rect width="202px" height="115px" fill="black" mask="url(#hole3)" />
+                </svg>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>
