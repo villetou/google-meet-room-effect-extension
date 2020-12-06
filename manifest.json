@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Google Meet Room Audio Effect",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "Makes Google Meet sound more roomy when the Google Meet tab is in background.",
   "author": "Ville Touronen",
   "homepage_url": "https://github.com/villetou/google-meet-room-effect-extension",
